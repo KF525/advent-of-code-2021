@@ -8,7 +8,7 @@ public class Day01Processor {
         int count = 0;
         for (int i=1; i < depths.size(); i++) {
             if (depths.get(i) > depths.get(i - 1)) {
-                count = count + 1;
+                count++;
             }
         }
         return count;
@@ -17,10 +17,8 @@ public class Day01Processor {
     int partTwo(List<Integer> depths) {
         int count = 0;
         for (int i=3; i < depths.size(); i++) {
-            int a = depths.get(i - 3);
-            int b = depths.get(i);
-            if (a < b) {
-                count = count + 1;
+            if (depths.get(i - 3) < depths.get(i)) {
+                count++;
             }
         }
         return count;
