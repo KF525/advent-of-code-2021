@@ -1,26 +1,17 @@
 package Day01;
 
 import io.vavr.collection.List;
+import io.vavr.collection.Stream;
 
 public class Day01Processor {
 
-    int partOne(List<Integer> depths) {
-        int count = 0;
-        for (int i=1; i < depths.size(); i++) {
-            if (depths.get(i) > depths.get(i - 1)) {
-                count++;
-            }
-        }
-        return count;
+    int partOne(List<Integer> input) {
+        return Stream.range(1, input.size())
+                .count(i -> input.get(i) > input.get(i - 1));
     }
 
-    int partTwo(List<Integer> depths) {
-        int count = 0;
-        for (int i=3; i < depths.size(); i++) {
-            if (depths.get(i - 3) < depths.get(i)) {
-                count++;
-            }
-        }
-        return count;
+    int partTwo(List<Integer> input) {
+        return Stream.range(3, input.size())
+                .count(i -> input.get(i) > input.get(i - 3));
     }
 }

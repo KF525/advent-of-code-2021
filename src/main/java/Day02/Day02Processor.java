@@ -4,50 +4,35 @@ import io.vavr.collection.List;
 
 public class Day02Processor {
 
-    int partOne(List<String> directions) {
-        int horizontal = 0;
-        int depth = 0;
+    int partOne(List<String> input) {
+        var finalPosition = input.foldLeft(new Position(0, 0, 0), (pos, instruction) -> {
+            var split = instruction.split(" ");
+            var cmd = split[0];
+            var amount = Integer.parseInt(split[1]);
 
-        for (String d : directions) {
-            String[] dir = d.split(" ");
-            int value = Integer.parseInt(dir[1]);
-            String direction = dir[0];
-            if (direction.equals("forward")) {
-                horizontal = horizontal + value;
-            } else if (direction.equals("down")) {
-                depth = depth + value;
-            } else {
-                depth = depth - value;
-            }
-        }
-        return horizontal * depth;
+            return switch (cmd) {
+                case "forward" -> new Position(pos.horizontal, pos.vertical + amount, pos.aim);
+                case "up" -> new Position(pos.horizontal - amount, pos.vertical, pos.aim);
+                case "down" -> new Position(pos.horizontal + amount, pos.vertical, pos.aim);
+                case default -> throw new RuntimeException("Unparseable line: '" + instruction + "'");
+            };
+        });
+        return Math.multiplyExact(finalPosition.horizontal, finalPosition.vertical);
     }
 
-    /**
-     * down X increases your aim by X units.
-     * up X decreases your aim by X units.
-     * forward X does two things:
-     * It increases your horizontal position by X units.
-     * It increases your depth by your aim multiplied by X.
-     */
-    int partTwo(List<String> directions) {
-        int horizontal = 0;
-        int depth = 0;
-        int aim = 0;
+    int partTwo(List<String> input) {
+        var finalPosition = input.foldLeft(new Position(0, 0, 0), (pos, instruction) -> {
+            var split = instruction.split(" ");
+            var cmd = split[0];
+            var amount = Integer.parseInt(split[1]);
 
-        for (String d : directions) {
-            String[] dir = d.split(" ");
-            int value = Integer.parseInt(dir[1]);
-            String direction = dir[0];
-            if (direction.equals("forward")) {
-                horizontal = horizontal + value;
-                depth = depth + (aim * value);
-            } else if (direction.equals("down")) {
-                aim = aim + value;
-            } else {
-                aim = aim - value;
-            }
-        }
-        return horizontal * depth;
+            return switch (cmd) {
+                case "forward" -> new Position(pos.horizontal + amount, pos.vertical + (pos.aim) * amount, pos.aim);
+                case "up" -> new Position(pos.horizontal, pos.vertical, pos.aim - amount);
+                case "down" -> new Position(pos.horizontal, pos.vertical, pos.aim + amount);
+                case default -> throw new RuntimeException("Unparseable line: '" + instruction + "'");
+            };
+        });
+        return Math.multiplyExact(finalPosition.horizontal, finalPosition.vertical);
     }
 }
