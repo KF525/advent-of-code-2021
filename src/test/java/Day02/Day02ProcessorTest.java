@@ -11,9 +11,20 @@ class Day02ProcessorTest {
 
     @Test
     @DisplayName("day 02 part one does the thing")
-    void day01PartOneDoesTheThing() {
+    void day02PartOneDoesTheThing() {
         Day02Processor problem = new Day02Processor();
-        //List<Integer> depths = List.of(199, 200, 208, 210, 200, 207, 240, 269, 260, 263);
-        assertEquals(1, problem.partOne());
+        List<String> directions = List.of("forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2");
+        assertEquals(150, problem.partOne(directions));
     }
+
+    @Test
+    @DisplayName("day 02 part two does the thing")
+    void day02PartTwoDoesTheThing() {
+        Day02Processor problem = new Day02Processor();
+        List<String> directions = List.of("forward 5", "down 5", "forward 8", "up 3", "down 8", "forward 2");
+        assertEquals(900, problem.partTwo(directions));
+    }
+
+
+
 }
